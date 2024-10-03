@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h1 {
+      color: var(--text-color);
+    }
+
+    .lang-select button {
+      margin-right: 10px;
+    }
+
+    .theme-toggle button {
+      padding: 5px 10px;
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
+
+// Light va Dark rejimlar uchun o'zgaruvchilar
+:root {
+  --background-color: #fff;
+  --text-color: #000;
+  --button-bg: #eee;
+  --button-text: #000;
+}
+
+.dark-mode {
+  --background-color: #333;
+  --text-color: #fff;
+  --button-bg: #333;
+  --button-text: #fff;
+}

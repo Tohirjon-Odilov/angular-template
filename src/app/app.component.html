@@ -1,15 +1,11 @@
-<div class="container">
-  <header>
-    <h1>{{ 'APP.TITLE' | translate }}</h1>
-    <div class="lang-select">
-      <button (click)="changeLang('en')">English</button>
-      <button (click)="changeLang('ru')">Русский</button>
-      <button (click)="changeLang('uz')">O'zbekcha</button>
-    </div>
-    <div class="theme-toggle">
-      <button (click)="toggleTheme()">
-        {{ themeService. isDarkMode ? 'Light Mode' : 'Dark Mode' }}
-      </button>
-    </div>
-  </header>
-</div>
+<header>
+  <app-header></app-header> <!-- Doimiy navbar -->
+</header>
+
+<main>
+  <router-outlet></router-outlet> <!-- Sahifa bo'ylab marshrutlanadigan joy -->
+</main>
+
+<footer>
+  <app-footer></app-footer> <!-- Doimiy footer -->
+</footer>

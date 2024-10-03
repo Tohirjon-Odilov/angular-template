@@ -1,5 +1,4 @@
 import { CoreModule } from './core/core.module';
-import { Feature1Module } from './features/feature1/feature1.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -8,6 +7,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HomeModule } from './features/home/home.module';
+import { LayoutModule } from './layout/layout.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -22,8 +23,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     CoreModule,
     SharedModule,
-    HttpClientModule, // HttpClientModule ni bu yerga qo'shing
-    Feature1Module,
+    HttpClientModule,
+    HomeModule,
+    LayoutModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

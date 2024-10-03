@@ -5,7 +5,8 @@ import { AuthService } from './authentication/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [CommonModule],
   providers: [AuthService, AuthGuard, ThemeService]
 })
