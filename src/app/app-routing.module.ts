@@ -1,7 +1,6 @@
 import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Feature1Component } from './features/feature1/components/feature1.component';
 import { LayoutComponent } from './layout/layout.component';
 // import { Feature2Component } from './features/feature2/components/feature2.component';
 

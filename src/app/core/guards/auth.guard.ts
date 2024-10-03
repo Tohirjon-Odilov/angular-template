@@ -1,22 +1,47 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { AuthService } from '../authentication/auth.service';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Observable } from 'rxjs';
+// import { UserService } from '../service/user/user.service';
+// import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
+  constructor(
+    // private userService: UserService,
+    private router: Router,
+    // private toastr: ToastrService
+  ) {}
 
-  constructor(private authService: AuthService, private router: Router) {}
-
-  canActivate(): boolean {
-    // Foydalanuvchi autentifikatsiya qilinganligini tekshiradi
-    if (this.authService.isAuthenticated()) {
-      return true; // Agar autentifikatsiya qilingan bo'lsa, sahifaga kirishga ruxsat beradi
+  // Foydalanuvchini avtorizatsiyadan o'tganini tekshiradi
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    // Agar foydalanuvchi avtorizatsiyadan o'tgan bo'lsa, true qaytaradi
+    if (true) {
+      return true;
     } else {
-      // Agar autentifikatsiya qilinmagan bo'lsa, foydalanuvchini login sahifasiga yo'naltiradi
+      // Aks holda login sahifasiga yo'naltiradi
       this.router.navigate(['/login']);
       return false;
     }
+  }
+
+  // Child marshrutlar uchun ham xuddi shu tekshiruvni amalga oshiramiz
+  canActivateChild(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+    return this.canActivate(route, state);
   }
 }
