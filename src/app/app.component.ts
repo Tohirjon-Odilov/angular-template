@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'; // Ko'p tillilik uchun ngx-translate
 import { ThemeService } from './core/services/theme.service'; // Dark/Light Mode boshqaruvi uchun xizmat
+import { LoggerService } from './core/services/logger.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private translate: TranslateService,
-    public themeService: ThemeService
+    public themeService: ThemeService,
+    private logger: LoggerService
   ) {
     // Qo'llab-quvvatlanadigan tillar
     this.translate.addLangs(['en', 'ru', 'uz']);

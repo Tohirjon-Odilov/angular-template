@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { API_URLS } from '../../config/constants'; // Global o'zgaruvchilar
+import { LoggerService } from './logger.service'; // Logger xizmati
 
 @Injectable({
-  providedIn: 'root' // 'root' bu yerda avtomatik singleton qilib beradi
+  providedIn: 'root',
 })
 export class UserService {
-  private apiUrl = 'https://api.example.com/users';
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private logger: LoggerService) {}
 
   getUsers(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    this.logger.info('Fetching all users'); // Logger orqali loglash
+    return this.http.get(API_URLS.USERS);
   }
 
   getUserById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${id}`);
+    this.logger.info(`Fetching user with id: ${id}`); // Logger orqali loglash
+    return this.http.get(`${API_URLS.USERS}/${id}`);
   }
 
   updateUser(id: number, userData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, userData);
+    this.logger.info(`Updating user with id: ${id}`); // Logger orqali loglash
+    return this.http.put(`${API_URLS.USERS}/${id}`, userData);
   }
 }

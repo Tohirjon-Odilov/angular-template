@@ -1,47 +1,85 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { API_URLS, ROLES } from '../../config/constants'; // constants.ts dan import qilish
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://your-api-url.com/auth'; // API'ning autentifikatsiya URL'ini kiriting
-  private currentUserSubject: BehaviorSubject<any>;
-  public currentUser: Observable<any>;
+  private rolesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]); // Ro‘llarni kuzatish uchun BehaviorSubject
 
-  constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser') || '{}'));
-    this.currentUser = this.currentUserSubject.asObservable();
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {
+    // Ro‘llarni localStorage'dan yuklash, agar mavjud bo'lsa
+    const storedRoles = this.getStoredUserRoles();
+    if (storedRoles) {
+      this.rolesSubject.next(storedRoles); // Ro‘llarni yangilash
+    }
   }
 
-  public get currentUserValue(): any {
-    return this.currentUserSubject.value;
-  }
-
-  // Login funksiyasi
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/login`, { username, password }).pipe(
+  // Foydalanuvchini login qilish
+  login(data: any): Observable<any> {
+    return this.http.post<any>(API_URLS.LOGIN_URL, data).pipe(  // constants.ts dan URL olindi
       tap(user => {
-        // Agar login muvaffaqiyatli bo'lsa, user ma'lumotlarini localStorage'da saqlash
         if (user && user.token) {
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+          // Foydalanuvchini localStorage va BehaviorSubject'da saqlash
+          localStorage.setItem('userData', JSON.stringify(user)); // Ma'lumotlarni saqlash
+          const userRoles = this.getRolesFromUser(user); // Ro‘llarni olish
+          this.rolesSubject.next(userRoles); // Ro‘llarni yangilash
         }
-      })
+      }),
+      catchError(this.handleError) // Xatolarni boshqarish
     );
   }
 
-  // Logout funksiyasi
+  // Foydalanuvchini logout qilish
   logout(): void {
-    // Foydalanuvchini localStorage'dan o'chirish va currentUserSubject'ni yangilash
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    // localStorage'dan foydalanuvchini o'chirish va BehaviorSubject'da ro‘llarni yangilash
+    localStorage.removeItem('userData'); // Ma'lumotlarni o'chirish
+    this.rolesSubject.next([]); // Ro‘llarni bo'shatish
+    this.router.navigate(['/login']); // Login sahifasiga yo‘naltirish
   }
 
-  // Foydalanuvchi autentifikatsiya qilinganmi, tekshirish
-  isAuthenticated(): boolean {
-    return !!this.currentUserValue;
+  // Foydalanuvchining rollarini kuzatish (Observable orqali)
+  getUserRoles(): Observable<string[]> {
+    return this.rolesSubject.asObservable(); // Observable orqali ro‘llarni kuzatish
+  }
+
+  // Ro‘llarni o‘rnatish (kuzatish uchun)
+  setUserRoles(roles: string[]): void {
+    this.rolesSubject.next(roles); // Ro‘llarni BehaviorSubject orqali yangilash
+  }
+
+  // Foydalanuvchi rollarini localStorage'dan olish
+  private getStoredUserRoles(): string[] | null {
+    try {
+      const userData = JSON.parse(localStorage.getItem('userData') as string); // LocalStorage'dan ma'lumot olish
+      return this.getRolesFromUser(userData); // Ro‘llarni user ma'lumotidan olish
+    } catch (error) {
+      return null; // Agar xato bo'lsa, null qaytarish
+    }
+  }
+
+  // Foydalanuvchi ob'ektidan ro‘llarni olish
+  private getRolesFromUser(user: any): string[] {
+    return user.is_designer ? [ROLES.DESIGNER] : [ROLES.DIRECTOR]; // constants.ts dan rollar
+  }
+
+  // Xatolarni boshqarish uchun umumiy funksiya
+  private handleError(error: any): Observable<never> {
+    let errorMessage = 'Xato yuz berdi';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side xatolar
+      errorMessage = `Client xatosi: ${error.error.message}`;
+    } else {
+      // Server-side xatolar
+      errorMessage = `Server xatosi: ${error.status}\nXabar: ${error.message}`;
+    }
+    return throwError(errorMessage); // Observable orqali xato qaytarish
   }
 }

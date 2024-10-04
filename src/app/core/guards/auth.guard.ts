@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Observable } from 'rxjs';
-// import { UserService } from '../service/user/user.service';
+import { LoggerService } from '../services/logger.service';
+// import { LoggerService } from './logger.service'; // Logger xizmati import qilingan
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(
-    // private userService: UserService,
-    private router: Router,
-  ) {}
+  constructor(private router: Router, private logger: LoggerService) {}
 
   // Foydalanuvchini avtorizatsiyadan o'tganini tekshiradi
   canActivate(
@@ -21,11 +26,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // Agar foydalanuvchi avtorizatsiyadan o'tgan bo'lsa, true qaytaradi
-    if (true) {
+    
+    // Misol uchun bu yerda foydalanuvchini avtorizatsiya holatini tekshirish kerak
+    const isAuthenticated = true; // Haqiqiy avtorizatsiya tekshiruvi bo'lishi kerak
+    if (isAuthenticated) {
+      this.logger.info('User is authenticated'); // Logger xizmati orqali kuzatish
       return true;
     } else {
-      // Aks holda login sahifasiga yo'naltiradi
+      this.logger.warn('User is not authenticated, redirecting to login'); // Logger orqali xato loglash
       this.router.navigate(['/login']);
       return false;
     }
