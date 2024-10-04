@@ -42,7 +42,7 @@ export class AuthService {
     // localStorage'dan foydalanuvchini o'chirish va BehaviorSubject'da ro‘llarni yangilash
     localStorage.removeItem('userData'); // Ma'lumotlarni o'chirish
     this.rolesSubject.next([]); // Ro‘llarni bo'shatish
-    this.router.navigate(['/login']); // Login sahifasiga yo‘naltirish
+    this.router.navigate(['/auth/login']); // Login sahifasiga yo‘naltirish
   }
 
   // Foydalanuvchining rollarini kuzatish (Observable orqali)

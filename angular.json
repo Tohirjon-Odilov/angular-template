@@ -44,7 +44,8 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": []
           },
@@ -74,8 +75,8 @@
         },
         "serve": {
           "options": {
-  "port": 5001
-},
+          "port": 5001
+        },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {

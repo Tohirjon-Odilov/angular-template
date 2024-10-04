@@ -31,13 +31,13 @@ export class RoleGuard implements CanActivate {
         // Agar user roli topilmasa, xato va login sahifasiga yo'naltirish
         if (userRoles.includes('null')) {
           this.toastr.warning('Foydalanuvchi roli topilmadi!', 'Xatolik');
-          this.router.navigate(['/login']);
+          this.router.navigate(['/auth/login']);
           return false;
         }
 
         // Agar userning ruxsati bo'lmasa, Access Denied sahifasiga yo'naltirish
         if (!hasRole) {
-          this.router.navigate(['/access-denied']);
+          this.router.navigate(['/error-pages']);
           return false;
         }
 

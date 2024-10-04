@@ -7,14 +7,14 @@ import { FormatDatePipe } from './pipes/format-date.pipe';
 @NgModule({
   declarations: [
     CustomButtonComponent,
-    // HoverDirective,
-    // FormatDatePipe
+    HoverDirective,
+    FormatDatePipe
   ],
   imports: [CommonModule],
   exports: [
     CustomButtonComponent,
-    // HoverDirective,
-    // FormatDatePipe,
+    HoverDirective,
+    FormatDatePipe,
     CommonModule
   ]
 })

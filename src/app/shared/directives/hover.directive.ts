@@ -17,6 +17,7 @@ export class HoverDirective {
     this.changeBackgroundColor('white');
   }
 
+  // Elementning background-color uslubini o'zgartirish uchun funksiya
   private changeBackgroundColor(color: string) {
     this.renderer.setStyle(this.el.nativeElement, 'backgroundColor', color);
   }

@@ -1,1 +1,50 @@
-<p>login works!</p>
+<section class="login-section">
+  <div class="container">
+    <div class="login">
+      <h2>Kirish</h2>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <!-- Foydalanuvchi nomi -->
+        <div class="form-group">
+          <label for="username"><span style="color: red;">*</span> Foydalanuvchi nomi</label>
+          <div class="input-icon">
+            <i class="fa fa-user"></i>
+            <input
+              id="username"
+              type="text"
+              formControlName="username"
+              placeholder="Foydalanuvchi nomi"
+            />
+          </div>
+          <!-- Foydalanuvchi nomi validatsiya xabari -->
+          <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="error">
+            Foydalanuvchi nomi kiritilishi shart
+          </div>
+        </div>
+
+        <!-- Parol -->
+        <div class="form-group">
+          <label for="password"><span style="color: red;">*</span> Parol</label>
+          <div class="input-icon">
+            <i class="fa fa-lock"></i>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Parol"
+            />
+          </div>
+          <!-- Parol validatsiya xabari -->
+          <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
+            Parol kiritilishi shart
+          </div>
+        </div>
+
+        <!-- Kirish tugmasi -->
+        <button type="submit" [disabled]="loginForm.invalid" class="submit-btn">
+          Kirish
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

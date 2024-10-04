@@ -10,7 +10,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HomeModule } from './features/home/home.module';
 import { LayoutModule } from './layout/layout.module';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthModule } from './features/auth/auth.module';
+import { ErrorPagesModule } from './features/error-pages/error-pages.module';
 
+// Tarjima loader'ini yaratish funksiyasi
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -26,7 +29,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     HttpClientModule,
     HomeModule,
+    AuthModule,
     LayoutModule,
+    ErrorPagesModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -38,8 +43,8 @@ export function HttpLoaderFactory(http: HttpClient) {
       timeOut: 3000,
       positionClass: 'toast-top-right',
       preventDuplicates: true,
-      closeButton: true, // Show close button
-      progressBar: true, // Show progress bar
+      closeButton: true, // Toastr uchun yopish tugmasi
+      progressBar: true, // Toastr uchun progress-bar
     })
   ],
   providers: [],

@@ -34,7 +34,7 @@ export class AuthInterceptor implements HttpInterceptor {
         // Agar foydalanuvchi avtorizatsiya qilinmagan bo'lsa (401 yoki 403)
         if (error.status === 401 || error.status === 403) {
           this.logger.warn('Unauthorized or Forbidden - redirecting to login'); // Log qilish
-          this.router.navigate(['/login']); // Login sahifasiga yo'naltirish
+          this.router.navigate(['/auth/login']); // Login sahifasiga yo'naltirish
         }
 
         this.logger.error(`HTTP Error: ${error.message}`); // Xatoni log qilish

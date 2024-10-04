@@ -1,24 +1,43 @@
-import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
-// import { Feature2Component } from './features/feature2/components/feature2.component';
+import { LayoutComponent } from './layout/layout.component'; // Layout component import
+import { RoleGuard } from './core/guards/role.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
-    path: '',
-    component: LayoutComponent,  // LayoutComponent orqali sahifalarni yuklash
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.module').then((m) => m.AuthModule),
+  }, // Auth moduli uchun lazy load
+  {
+    path: '', // Layout orqali yuklanadigan barcha marshrutlar
+    component: LayoutComponent,
+    canActivate: [AuthGuard], // Layout ichidagi barcha marshrutlarni AuthGuard orqali himoya qilish
     children: [
-      { path: 'home', loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule) },
-      // { path: 'about', loadChildren: () => import('./features/about/about.module').then(m => m.AboutModule) },
-    ]
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/home/home.module').then((m) => m.HomeModule),
+        canActivate: [AuthGuard, RoleGuard], // Home sahifasini Role va Auth guard orqali himoya qilish
+        data: { roles: ['designer', 'director'] }, // Foydalanuvchining roliga ko'ra himoya
+      }, // Home moduli uchun lazy load
+    ],
+  },{
+    path: 'error-pages',
+    loadChildren: () =>
+      import('./features/error-pages/error-pages.module').then(
+        (m) => m.ErrorPagesModule
+      ),
   },
-  { path: '**', redirectTo: 'home' }  // Default yo'nalish
+  {
+    path: '**',
+    redirectTo: '/error-pages/not-found'  // Barcha noma'lum marshrutlar uchun NotFound sahifasiga yo'naltirish
+  }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
