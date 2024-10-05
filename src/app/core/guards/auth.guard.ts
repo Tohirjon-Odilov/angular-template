@@ -29,9 +29,9 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | UrlTree {
     
     // Misol uchun bu yerda foydalanuvchini avtorizatsiya holatini tekshirish kerak
-    const isAuthenticated = this.authService.isAuthenticated(); // Haqiqiy avtorizatsiya tekshiruvi bo'lishi kerak
-    this.logger.info(`Is user authenticated: ${isAuthenticated}`);
-    if (isAuthenticated) {
+    const [roles, token] = this.authService.isAuthenticated(); // Haqiqiy avtorizatsiya tekshiruvi bo'lishi kerak
+    this.logger.info(`Is user authenticated: ${token}`);
+    if (token) {
       this.logger.info('User is authenticated'); // Logger xizmati orqali kuzatish
       return true;
     } else {

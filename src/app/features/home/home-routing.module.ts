@@ -8,8 +8,8 @@ const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AuthGuard, RoleGuard], // HomeComponent ni AuthGuard va RoleGuard orqali himoya qilish
-    data: { roles: ['designer', 'director'] }, // Foydalanuvchi ro'lini tekshirish
+    // canActivate: [AuthGuard, RoleGuard], // HomeComponent ni AuthGuard va RoleGuard orqali himoya qilish
+    // data: { roles: ['designer', 'director'] }, // Foydalanuvchi ro'lini tekshirish
   },
 ];
 

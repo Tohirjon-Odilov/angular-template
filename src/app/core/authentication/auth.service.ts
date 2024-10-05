@@ -56,7 +56,7 @@ export class AuthService {
     public isAuthenticated(): any {
       // const user = this.currentUserSubject.value;
       // this.logger.info(user);
-      // return user && user.token ? true : false;
+      return this.getStoredUserRoles();
     }
 
   // Foydalanuvchining rollarini kuzatish (Observable orqali)

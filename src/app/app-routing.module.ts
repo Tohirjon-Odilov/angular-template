@@ -14,15 +14,15 @@ const routes: Routes = [
   {
     path: '', // Layout orqali yuklanadigan barcha marshrutlar
     component: LayoutComponent,
-    canActivate: [AuthGuard, RoleGuard], // Layout ichidagi barcha marshrutlarni AuthGuard orqali himoya qilish
-    data: { roles: [ROLES.ADMIN] }, // Foydalanuvchining roliga ko'ra himoya
+    // canActivate: [AuthGuard, RoleGuard], // Layout ichidagi barcha marshrutlarni AuthGuard orqali himoya qilish
+    // data: { roles: [ROLES.ADMIN] }, // Foydalanuvchining roliga ko'ra himoya
     children: [
       {
         path: 'home',
         loadChildren: () =>
           import('./features/home/home.module').then((m) => m.HomeModule),
-        canActivate: [AuthGuard, RoleGuard], // Home sahifasini Role va Auth guard orqali himoya qilish
-        data: { roles: [ROLES.ADMIN, ROLES.USER] }, // Foydalanuvchining roliga ko'ra himoya
+        // canActivate: [AuthGuard, RoleGuard], // Home sahifasini Role va Auth guard orqali himoya qilish
+        // data: { roles: [ROLES.ADMIN, ROLES.USER] }, // Foydalanuvchining roliga ko'ra himoya
       }, // Home moduli uchun lazy load
     ],
   },{
