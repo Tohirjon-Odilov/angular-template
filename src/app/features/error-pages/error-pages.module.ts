@@ -5,6 +5,7 @@ import { ErrorPagesRoutingModule } from './error-pages-routing.module';
 import { AccessDeniedComponent } from './components/access-denied/access-denied.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { RouterModule } from '@angular/router';
+import { SharedModule } from "../../shared/shared.module";
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     RouterModule,
-    ErrorPagesRoutingModule
-  ]
+    ErrorPagesRoutingModule,
+    SharedModule
+]
 })
 export class ErrorPagesModule { }

@@ -9,13 +9,14 @@ import {
 } from '@angular/router';
 import { Observable } from 'rxjs';
 import { LoggerService } from '../services/logger.service';
+import { AuthService } from '../authentication/auth.service';
 // import { LoggerService } from './logger.service'; // Logger xizmati import qilingan
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private router: Router, private logger: LoggerService) {}
+  constructor(private router: Router, private logger: LoggerService, private authService: AuthService) {}
 
   // Foydalanuvchini avtorizatsiyadan o'tganini tekshiradi
   canActivate(
@@ -28,7 +29,8 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     | UrlTree {
     
     // Misol uchun bu yerda foydalanuvchini avtorizatsiya holatini tekshirish kerak
-    const isAuthenticated = false; // Haqiqiy avtorizatsiya tekshiruvi bo'lishi kerak
+    const isAuthenticated = this.authService.isAuthenticated(); // Haqiqiy avtorizatsiya tekshiruvi bo'lishi kerak
+    this.logger.info(`Is user authenticated: ${isAuthenticated}`);
     if (isAuthenticated) {
       this.logger.info('User is authenticated'); // Logger xizmati orqali kuzatish
       return true;

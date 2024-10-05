@@ -1,0 +1,26 @@
+/* Ortga tugmasi uchun stil */
+.btn-back {
+  background-color: var(--btn-back-bg); /* Tugma fon rangi */
+  color: var(--btn-back-color); /* Matn rangi */
+  padding: 10px 20px; /* Ichki bo'shliq */
+  font-size: 16px; /* Matn o'lchami */
+  border: none; /* Chegara yo'q */
+  border-radius: 8px; /* Burchaklarni yumaloqlash */
+  cursor: pointer; /* Ko'rsatkichni bosish belgisi */
+  display: inline-flex; /* Matn va ikonani yonma-yon qilish uchun */
+  align-items: center; /* Matn va ikonani vertikal markazga tekislash */
+  gap: 8px; /* Matn va ikon orasidagi masofa */
+  transition: background-color 0.3s ease; /* Hover effekti */
+  margin-bottom: 20px;
+}
+
+/* Tugma hover holati */
+.btn-back:hover {
+  background-color: var(--btn-back-hover-bg); /* Hoverda fon rangi o'zgarishi */
+}
+
+/* Tugma bosilgandagi holati */
+.btn-back:active {
+  background-color: var(--btn-back-active-bg); /* Aktiv holat fon rangi */
+  transform: scale(0.98); /* Tugma bosilganda kichraytirish effekti */
+}

@@ -1,0 +1,38 @@
+/* Access Denied Page Styles */
+.access-denied-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--access-denied-bg); /* Background color */
+}
+
+.message-box {
+  text-align: center;
+  padding: 2rem;
+  border-radius: 8px;
+  background-color: var(--message-box-bg); /* Message box background */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Stronger shadow for more depth */
+}
+
+.message-box h1 {
+  font-size: 6rem;
+  margin: 0;
+  color: var(--h1-color); /* H1 color */
+}
+
+.message-box h2 {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+  color: var(--h2-color); /* H2 color */
+}
+
+.message-box p {
+  font-size: 1.2rem;
+  color: var(--p-color); /* Paragraph text color */
+  margin-bottom: 20px;
+}
+
+.message-box a:hover {
+  background-color: var(--link-hover-bg); /* Hover background color */
+}

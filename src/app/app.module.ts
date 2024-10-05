@@ -12,6 +12,7 @@ import { LayoutModule } from './layout/layout.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthModule } from './features/auth/auth.module';
 import { ErrorPagesModule } from './features/error-pages/error-pages.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Tarjima loader'ini yaratish funksiyasi
 export function HttpLoaderFactory(http: HttpClient) {
@@ -23,6 +24,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     CoreModule,

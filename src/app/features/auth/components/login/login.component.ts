@@ -58,12 +58,12 @@ export class LoginComponent implements OnInit {
 
           // Foydalanuvchi roliga ko'ra yo'naltirish
           if (data.is_designer) {
-            this.router.navigate(['/user-category']);
+            this.router.navigate(['/']);
           } else if (data.is_director) {
-            this.router.navigate(['/director']);
+            this.router.navigate(['/']);
           }
 
-          this.toaster.success("Xush kelibsiz.", `Tasdiqlandi, ${data.is_designer ? 'Loyihachi' : 'Direktor'}!`);
+          this.toaster.success("Xush kelibsiz.", `Tasdiqlandi`);
         },
         error: (err) => {
           if (err.status === 401) {

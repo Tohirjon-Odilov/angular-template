@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr'; // Toastr qo'llab-quvvatlash
   ],
   imports: [
     CommonModule,
+    // BrowserAnimationsModule,
     AuthRoutingModule,
     FormsModule,              // Template-driven formalar uchun
     ReactiveFormsModule,       // Reactive formalar uchun

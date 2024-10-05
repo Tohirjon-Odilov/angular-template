@@ -11,6 +11,29 @@
   --toast-error-bg: #dc3545;
   --spinner-border-left: #3f51b5;
   --spinner-text-color: #333;
+
+  // go-back component
+  --btn-back-bg: #6b6c6d;
+  --btn-back-hover-bg: #23272b;
+  --btn-back-active-bg: #1d2124;
+  --btn-back-color: white;
+
+  // not-found component
+  --background-color: #f8f9fa; /* Light mode background */
+  --message-box-bg: #ffffff; /* Light mode message box background */
+  --icon-color: crimson;
+  --h1-color: #343a40;
+  --h2-color: #6c757d;
+  --p-color: #adb5bd;
+  --link-hover-bg: #0056b3;
+
+  // access-denied component
+  --access-denied-bg: #f8f9fa; /* Light mode background */
+  --message-box-bg: #ffffff; /* Light mode message box background */
+  --h1-color: #e57373; /* Soft red for h1 */
+  --h2-color: #6c757d; /* Subheading color */
+  --p-color: #adb5bd; /* Paragraph text color */
+  --link-hover-bg: #5a6268; /* Hover background color for link */
 }
 
 .dark-mode {
@@ -24,6 +47,29 @@
   --toast-error-bg: #dc3545;
   --spinner-border-left: #3f51b5;
   --spinner-text-color: #fff;
+
+  // go-back component
+  --btn-back-bg: #3a3b3c;
+  --btn-back-hover-bg: #292b2c;
+  --btn-back-active-bg: #1a1b1c;
+  --btn-back-color: white;
+
+  // not-found component
+  --background-color: #2c2c2c; /* Dark grey background */
+  --message-box-bg: #343a40; /* Darker grey for the message box */
+  --icon-color: crimson; /* Crimson color for the icon */
+  --h1-color: #f8f9fa; /* Off-white for better contrast */
+  --h2-color: #ced4da; /* Light grey for subheading */
+  --p-color: #adb5bd; /* Muted grey for paragraph text */
+  --link-hover-bg: #0056b3;
+
+  // access-denied component
+  --access-denied-bg: #1f1f1f; /* Very dark grey background */
+  --message-box-bg: #2e2e2e; /* Slightly lighter dark grey */
+  --h1-color: #e57373; /* Soft red for h1 */
+  --h2-color: #b0b0b0; /* Light grey for subheading */
+  --p-color: #d0d0d0; /* Light grey for paragraph text */
+  --link-hover-bg: #5a6268; /* Darker grey for hover effect */
 }
 
 // ######################################################## //

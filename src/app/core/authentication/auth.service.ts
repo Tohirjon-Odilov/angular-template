@@ -4,17 +4,24 @@ import { Router } from '@angular/router';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { API_URLS, ROLES } from '../../config/constants'; // constants.ts dan import qilish
+import { LoggerService } from '../services/logger.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private rolesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]); // Ro‘llarni kuzatish uchun BehaviorSubject
-
+  // private currentUserSubject: BehaviorSubject<any>;
+  // public currentUser: Observable<any>;
   constructor(
     private http: HttpClient,
     private router: Router,
+    private logger: LoggerService
   ) {
+    // BehaviorSubject'dan foydalanuvchini olish
+    // this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('userData') || '{}'));
+    // this.currentUser = this.currentUserSubject.asObservable();
+
     // Ro‘llarni localStorage'dan yuklash, agar mavjud bo'lsa
     const storedRoles = this.getStoredUserRoles();
     if (storedRoles) {
@@ -29,8 +36,8 @@ export class AuthService {
         if (user && user.token) {
           // Foydalanuvchini localStorage va BehaviorSubject'da saqlash
           localStorage.setItem('userData', JSON.stringify(user)); // Ma'lumotlarni saqlash
-          const userRoles = this.getRolesFromUser(user); // Ro‘llarni olish
-          this.rolesSubject.next(userRoles); // Ro‘llarni yangilash
+          const [roles, token] = this.getRolesFromUser(user.is_designer ? ROLES.ADMIN : ROLES.USER, user.token); // Ro‘llarni olish
+          this.rolesSubject.next([roles]); // Ro‘llarni yangilash
         }
       }),
       catchError(this.handleError) // Xatolarni boshqarish
@@ -44,6 +51,13 @@ export class AuthService {
     this.rolesSubject.next([]); // Ro‘llarni bo'shatish
     this.router.navigate(['/auth/login']); // Login sahifasiga yo‘naltirish
   }
+
+    // Avtorizatsiya tekshiruvini bu yerda amalga oshiramiz
+    public isAuthenticated(): any {
+      // const user = this.currentUserSubject.value;
+      // this.logger.info(user);
+      // return user && user.token ? true : false;
+    }
 
   // Foydalanuvchining rollarini kuzatish (Observable orqali)
   getUserRoles(): Observable<string[]> {
@@ -59,15 +73,19 @@ export class AuthService {
   private getStoredUserRoles(): string[] | null {
     try {
       const userData = JSON.parse(localStorage.getItem('userData') as string); // LocalStorage'dan ma'lumot olish
-      return this.getRolesFromUser(userData); // Ro‘llarni user ma'lumotidan olish
+      return this.getRolesFromUser(userData.is_designer ? ROLES.ADMIN : ROLES.USER, userData.token); // Ro‘llarni user ma'lumotidan olish
     } catch (error) {
       return null; // Agar xato bo'lsa, null qaytarish
     }
   }
 
   // Foydalanuvchi ob'ektidan ro‘llarni olish
-  private getRolesFromUser(user: any): string[] {
-    return user.is_designer ? [ROLES.DESIGNER] : [ROLES.DIRECTOR]; // constants.ts dan rollar
+  private getRolesFromUser(role: any, token: any): string[] {
+    var data: any = { 
+      roles: role, 
+      token: token
+    };
+    return data; // constants.ts dan rollar
   }
 
   // Xatolarni boshqarish uchun umumiy funksiya

@@ -9,12 +9,13 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../authentication/auth.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { LoggerService } from '../services/logger.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RoleGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService) {}
+  constructor(private authService: AuthService, private router: Router, private toastr: ToastrService, private logger: LoggerService) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -28,6 +29,8 @@ export class RoleGuard implements CanActivate {
         // Foydalanuvchining rollarini tekshirish
         const hasRole = expectedRoles?.some((role) => userRoles.includes(role));
 
+        this.logger.info(`User has role: ${expectedRoles}`);
+
         // Agar user roli topilmasa, xato va login sahifasiga yo'naltirish
         if (userRoles.includes('null')) {
           this.toastr.warning('Foydalanuvchi roli topilmadi!', 'Xatolik');
@@ -37,7 +40,7 @@ export class RoleGuard implements CanActivate {
 
         // Agar userning ruxsati bo'lmasa, Access Denied sahifasiga yo'naltirish
         if (!hasRole) {
-          this.router.navigate(['/error-pages']);
+          this.router.navigate(['/error-pages/access-denied']);
           return false;
         }
 

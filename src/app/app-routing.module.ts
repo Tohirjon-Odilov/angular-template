@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component'; // Layout component import
 import { RoleGuard } from './core/guards/role.guard';
 import { AuthGuard } from './core/guards/auth.guard';
+import { ROLES } from './config/constants';
 
 const routes: Routes = [
   {
@@ -13,14 +14,15 @@ const routes: Routes = [
   {
     path: '', // Layout orqali yuklanadigan barcha marshrutlar
     component: LayoutComponent,
-    canActivate: [AuthGuard], // Layout ichidagi barcha marshrutlarni AuthGuard orqali himoya qilish
+    canActivate: [AuthGuard, RoleGuard], // Layout ichidagi barcha marshrutlarni AuthGuard orqali himoya qilish
+    data: { roles: [ROLES.ADMIN] }, // Foydalanuvchining roliga ko'ra himoya
     children: [
       {
-        path: '',
+        path: 'home',
         loadChildren: () =>
           import('./features/home/home.module').then((m) => m.HomeModule),
         canActivate: [AuthGuard, RoleGuard], // Home sahifasini Role va Auth guard orqali himoya qilish
-        data: { roles: ['designer', 'director'] }, // Foydalanuvchining roliga ko'ra himoya
+        data: { roles: [ROLES.ADMIN, ROLES.USER] }, // Foydalanuvchining roliga ko'ra himoya
       }, // Home moduli uchun lazy load
     ],
   },{
