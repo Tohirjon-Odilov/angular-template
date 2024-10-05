@@ -18,7 +18,7 @@ const routes: Routes = [
     // data: { roles: [ROLES.ADMIN] }, // Foydalanuvchining roliga ko'ra himoya
     children: [
       {
-        path: 'home',
+        path: '',
         loadChildren: () =>
           import('./features/home/home.module').then((m) => m.HomeModule),
         // canActivate: [AuthGuard, RoleGuard], // Home sahifasini Role va Auth guard orqali himoya qilish
